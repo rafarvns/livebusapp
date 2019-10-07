@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart' as prefix0;
 import 'package:livebus/app/core/values/colors.dart';
 import 'package:livebus/app/views/widgets/home/search_dialog.dart';
 import 'package:location/location.dart';
@@ -60,6 +59,7 @@ class _FireMapState extends State<FireMap> {
 
   void _animateToUser() async {
     var pos = await _getLiveLocation();
+    print(pos.latitude.toString() + " | " + pos.longitude.toString());
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       target: LatLng(pos.latitude, pos.longitude),
       zoom: 16.0,
