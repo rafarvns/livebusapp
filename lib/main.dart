@@ -23,40 +23,15 @@ void main()async{
     title: "Live Bus - App",
     theme: ThemeData(hintColor: primaryColor, primaryColor: lightColor),
     home: Container(
-      child: DataB()
+      child: Home()
     ),
   ));
 }
 
-class DataB extends StatefulWidget {
-  @override
-  _DataBState createState() => _DataBState();
-}
-
-class _DataBState extends State<DataB> {
-  String texto;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Text(
-            "saved: "
-        )
-      ],
-    );
-  }
-}
-
-void setTexto(String texto){
-
-}
 
 Future<Database> database() async {
   if (_database != null)
     return _database;
-
-  // if _database is null we instantiate it
   _database = await initDB();
   return _database;
 }
