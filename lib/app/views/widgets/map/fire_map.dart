@@ -54,14 +54,6 @@ class _FireMapState extends State<FireMap> {
       _animateToUser();
       _add();
       _addPolylines();
-
-      ApiConnector api = new ApiConnector();
-      api.get("routedraw").then((response) {
-              List list = json.decode(response);
-              List<RouteDraw> lst = list.map((model) => RouteDraw.fromJson(model)).toList();
-              print("$lst[0].latitude kkkkkkkkkkkkkkkkk");
-          }
-      );
     });
   }
 
