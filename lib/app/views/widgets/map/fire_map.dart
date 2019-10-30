@@ -71,10 +71,10 @@ class _FireMapState extends State<FireMap> {
     )));
   }
 
-  void _addPolylines() {
+  Future _addPolylines() async {
     List<LatLng> lstLatLng = List<LatLng>();
-
-    lstLatLng.add(LatLng(-10.1802, -48.334));
+    List<RouteDraw> lstRoutes = await getPolylines();
+    lstRoutes.forEach((route) => lstLatLng.add(LatLng(route.latitude, route.longitude)));
 
     Polyline polyline = Polyline(
       polylineId: PolylineId("1"),
@@ -85,6 +85,13 @@ class _FireMapState extends State<FireMap> {
     );
     this.lstPolylines = Set();
     this.lstPolylines.add(polyline);
+  }
+
+  Future<List<RouteDraw>> getPolylines() async {
+    ApiConnector api = new ApiConnector();
+    List<RouteDraw> routeDraw;
+    routeDraw = await api.get("routedraw");
+    return routeDraw;
   }
 
   void _add() async {
