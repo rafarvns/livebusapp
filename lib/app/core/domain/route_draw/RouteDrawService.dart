@@ -12,7 +12,7 @@ class RouteDrawService extends ApiConnector implements RouteDrawServiceAbstract 
   @override
   Future<List<RouteDraw>> getAllRouteDrawByLine(int numberLine) async {
     var parsed = await get("routedraw/byLine/$numberLine");
-    return (parsed["data"] as List).map<RouteDraw>((json)=> new RouteDraw.fromJson(json)).toList();
+    return (parsed["data"] as List).map<RouteDraw>((json) => new RouteDraw.fromJson(json)).toList();
   }
 
 }

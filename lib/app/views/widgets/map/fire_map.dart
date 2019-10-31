@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:livebus/app/core/domain/point/PointRequest.dart';
 import 'package:livebus/app/core/domain/route_draw/RouteDraw.dart';
 import 'package:livebus/app/core/domain/route_draw/RouteDrawRequest.dart';
 import 'package:livebus/app/core/shared/ApiService.dart';
@@ -33,7 +34,7 @@ class _FireMapState extends State<FireMap> {
         markers: Set<Marker>.of(markers.values),
       ),
       Positioned(
-        right: 12,
+        right: 16,
         bottom: 16,
         child: FloatingActionButton(
           onPressed: openSearchDialog(context),
@@ -73,9 +74,8 @@ class _FireMapState extends State<FireMap> {
   }
 
   void _addPolylines() {
-
     RouteDrawRequest rt = new RouteDrawRequest();
-    rt.getAllRouteDrawByLine(90).then((routesDraw){
+    rt.getAllRouteDrawByLine(90).then((routesDraw) {
       if (routesDraw != null) {
         List<LatLng> lstLatLng = List<LatLng>();
         routesDraw.forEach(
@@ -91,23 +91,30 @@ class _FireMapState extends State<FireMap> {
         this.lstPolylines.add(polyline);
       }
     });
-
   }
 
   void _add() async {
     BitmapDescriptor stopIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(size: Size(48, 48)), "assets/busstop.png");
-    var marker1 = Marker(
-      position: LatLng(-10.180197, -48.334082),
-      icon: stopIcon,
-      infoWindow:
-          InfoWindow(title: "Ponto de Ônibus", snippet: "Linhas:\n• 090"),
-      markerId: MarkerId("1"),
-    );
 
-    setState(() {
-      markers[MarkerId("1")] = marker1;
-
+    PointRequest pr = new PointRequest();
+    pr.getAllByNumber(90).then((points){
+      int mId = 0;
+      if(points != null){
+        points.forEach((point) {
+          mId++;
+          setState(() {
+            markers[MarkerId("$mId")] = Marker(
+              position: LatLng(point.latitude, point.longitude),
+              icon: stopIcon,
+              infoWindow:
+              InfoWindow(title: point.title, snippet: point.snippets),
+              markerId: MarkerId("$mId"),
+            );
+          });
+        });
+      }
     });
+
   }
 }

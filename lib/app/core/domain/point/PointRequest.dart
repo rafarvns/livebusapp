@@ -10,8 +10,8 @@ class PointRequest {
 
     PointRequest() { _service = new PointService(); }
 
-    Future<List<Point>> getAll(int number){
-      return _service.getAll(number);
+    Future<List<Point>> getAllByNumber(int number){
+      return _service.getAllByNumber(number);
     }
 
 }

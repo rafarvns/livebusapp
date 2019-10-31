@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 
 Color primaryColor = Colors.amberAccent;
 Color secondaryColor = Colors.black;
