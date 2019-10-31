@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:livebus/app/core/domain/route_draw/RouteDraw.dart';
-import 'package:livebus/app/core/shared/ApiConnector.dart';
+import 'package:livebus/app/core/domain/route_draw/RouteDrawRequest.dart';
+import 'package:livebus/app/core/shared/ApiService.dart';
 import 'package:livebus/app/core/values/colors.dart';
 import 'package:livebus/app/views/widgets/home/search_dialog.dart';
 import 'package:location/location.dart';
@@ -72,28 +73,25 @@ class _FireMapState extends State<FireMap> {
   }
 
   void _addPolylines() {
-    List<LatLng> lstLatLng = List<LatLng>();
-    List<RouteDraw> lstRoutes = getPolylines();
-    lstRoutes.forEach((route) => lstLatLng.add(LatLng(route.latitude, route.longitude)));
 
-    Polyline polyline = Polyline(
-      polylineId: PolylineId("1"),
-      visible: true,
-      points: lstLatLng,
-      color: Colors.blue,
-      width: 4,
-    );
-    this.lstPolylines = Set();
-    this.lstPolylines.add(polyline);
-  }
-
-  List<RouteDraw> getPolylines() {
-    ApiConnector api = new ApiConnector();
-    List<RouteDraw> routeDraw;
-    api.get("routedraw").then((value){
-      routeDraw = value;
+    RouteDrawRequest rt = new RouteDrawRequest();
+    rt.getAllRouteDrawByLine(90).then((routesDraw){
+      if (routesDraw != null) {
+        List<LatLng> lstLatLng = List<LatLng>();
+        routesDraw.forEach(
+            (route) => lstLatLng.add(LatLng(route.latitude, route.longitude)));
+        Polyline polyline = Polyline(
+          polylineId: PolylineId("1"),
+          visible: true,
+          points: lstLatLng,
+          color: Colors.blue,
+          width: 6,
+        );
+        this.lstPolylines = Set();
+        this.lstPolylines.add(polyline);
+      }
     });
-    return routeDraw;
+
   }
 
   void _add() async {
@@ -106,89 +104,10 @@ class _FireMapState extends State<FireMap> {
           InfoWindow(title: "Ponto de Ônibus", snippet: "Linhas:\n• 090"),
       markerId: MarkerId("1"),
     );
-    var marker2 = Marker(
-      position: LatLng(-10.182910, -48.337223),
-      icon: stopIcon,
-      infoWindow:
-          InfoWindow(title: "Ponto de Ônibus", snippet: "Linhas:\n• 090"),
-      markerId: MarkerId("2"),
-    );
-    var marker3 = Marker(
-      position: LatLng(-10.184420, -48.339154),
-      icon: stopIcon,
-      infoWindow:
-          InfoWindow(title: "Ponto de Ônibus", snippet: "Linhas:\n• 090"),
-      markerId: MarkerId("3"),
-    );
-    var marker4 = Marker(
-      position: LatLng(-10.184317, -48.344455),
-      icon: stopIcon,
-      infoWindow:
-          InfoWindow(title: "Ponto de Ônibus", snippet: "Linhas:\n• 090"),
-      markerId: MarkerId("4"),
-    );
-    var marker5 = Marker(
-      position: LatLng(-10.184516, -48.348203),
-      icon: stopIcon,
-      infoWindow:
-          InfoWindow(title: "Ponto de Ônibus", snippet: "Linhas:\n• 090"),
-      markerId: MarkerId("5"),
-    );
-    var marker6 = Marker(
-      position: LatLng(-10.184136, -48.359346),
-      icon: stopIcon,
-      infoWindow:
-          InfoWindow(title: "Ponto de Ônibus", snippet: "Linhas:\n• 090"),
-      markerId: MarkerId("6"),
-    );
-    var marker7 = Marker(
-      position: LatLng(-10.184136, -48.359346),
-      icon: stopIcon,
-      infoWindow:
-          InfoWindow(title: "Ponto de Ônibus", snippet: "Linhas:\n• 090"),
-      markerId: MarkerId("7"),
-    );
-    var marker8 = Marker(
-      position: LatLng(-10.178185, -48.362423),
-      icon: stopIcon,
-      infoWindow:
-          InfoWindow(title: "Ponto de Ônibus", snippet: "Linhas:\n• 090"),
-      markerId: MarkerId("8"),
-    );
-    var marker9 = Marker(
-      position: LatLng(-10.176142, -48.361471),
-      icon: stopIcon,
-      infoWindow:
-          InfoWindow(title: "Ponto de Ônibus", snippet: "Linhas:\n• 090"),
-      markerId: MarkerId("9"),
-    );
-    var marker10 = Marker(
-      position: LatLng(-10.177388, -48.359797),
-      icon: stopIcon,
-      infoWindow:
-          InfoWindow(title: "Ponto de Ônibus", snippet: "Linhas:\n• 090"),
-      markerId: MarkerId("10"),
-    );
-    var marker11 = Marker(
-      position: LatLng(-10.179718, -48.359791),
-      icon: stopIcon,
-      infoWindow:
-          InfoWindow(title: "Ponto de Ônibus", snippet: "Linhas:\n• 090"),
-      markerId: MarkerId("11"),
-    );
 
     setState(() {
       markers[MarkerId("1")] = marker1;
-      markers[MarkerId("2")] = marker2;
-      markers[MarkerId("3")] = marker3;
-      markers[MarkerId("4")] = marker4;
-      markers[MarkerId("5")] = marker5;
-      markers[MarkerId("6")] = marker6;
-      markers[MarkerId("7")] = marker7;
-      markers[MarkerId("8")] = marker8;
-      markers[MarkerId("9")] = marker9;
-      markers[MarkerId("10")] = marker10;
-      markers[MarkerId("11")] = marker11;
+
     });
   }
 }
