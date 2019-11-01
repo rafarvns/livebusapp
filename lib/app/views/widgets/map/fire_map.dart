@@ -52,7 +52,7 @@ class _FireMapState extends State<FireMap> {
     setState(() {
       mapController = controller;
       _animateToUser();
-      _add();
+      _addPoints();
       _addPolylines();
     });
   }
@@ -91,14 +91,13 @@ class _FireMapState extends State<FireMap> {
     });
   }
 
-  void _add() async {
+  void _addPoints() async {
     BitmapDescriptor stopIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(size: Size(48, 48)), "assets/busstop.png");
-
     PointRequest pr = new PointRequest();
-    pr.getAllByNumber(90).then((points){
+    pr.getAllByNumber(90).then((points) {
       int mId = 0;
-      if(points != null){
+      if (points != null) {
         points.forEach((point) {
           mId++;
           setState(() {
@@ -106,13 +105,12 @@ class _FireMapState extends State<FireMap> {
               position: LatLng(point.latitude, point.longitude),
               icon: stopIcon,
               infoWindow:
-              InfoWindow(title: point.title, snippet: point.snippets),
+                  InfoWindow(title: point.title, snippet: point.snippets),
               markerId: MarkerId("$mId"),
             );
           });
         });
       }
     });
-
   }
 }
