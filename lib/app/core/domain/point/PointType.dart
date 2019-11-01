@@ -1,5 +1,5 @@
 
-enum EPointType {
+enum PointType {
   STATION,
   BASIC,
   MODERN

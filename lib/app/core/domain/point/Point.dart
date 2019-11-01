@@ -1,6 +1,5 @@
 
 import 'package:livebus/app/core/domain/line/Line.dart';
-import 'package:livebus/app/core/enums/EPointType.dart';
 
 class Point {
   int id;
