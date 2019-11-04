@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 
 class ApiConnector {
-  static const _apiPath = "http://10.0.2.2:8080/api/";
+//  static const _apiPath = "http://10.0.2.2:8080/api/";
+  static const _apiPath = "http://192.168.1.99:8080/api/";
   String _ref = "";
 
   ApiConnector(this._ref);

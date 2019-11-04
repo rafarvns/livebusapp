@@ -1,25 +1,36 @@
 
 import 'package:livebus/app/core/domain/line/Line.dart';
 
-class RouteDraw {
+class Live {
   int _id;
   double _latitude;
   double _longitude;
-  int _indexPos;
+  int _trustLevel;
   Line _line;
 
-  RouteDraw(this._id, this._latitude, this._longitude, this._indexPos,
+  Live(this._id, this._latitude, this._longitude, this._trustLevel,
     this._line);
 
-  factory RouteDraw.fromJson(Map<String, dynamic> json) {
-    RouteDraw route = new RouteDraw(
+  factory Live.fromJson(Map<String, dynamic> json) {
+    Live live = new Live(
       json['id'],
       json['latitude'],
       json['longitude'],
-      json['indexPos'],
+      json['trustLevel'],
       Line.fromJson(json['line'])
     );
-    return route;
+    return live;
+  }
+
+  factory Live.summaryDTO(Map<String, dynamic> json) {
+    Live live = new Live(
+      null,
+      json['latitude'],
+      json['longitude'],
+      json['trustLevel'],
+      null,
+    );
+    return live;
   }
 
   Line get line => _line;
@@ -28,10 +39,10 @@ class RouteDraw {
     _line = value;
   }
 
-  int get indexPos => _indexPos;
+  int get trustLevel => _trustLevel;
 
-  set indexPos(int value) {
-    _indexPos = value;
+  set trustLevel(int value) {
+    _trustLevel = value;
   }
 
   double get longitude => _longitude;

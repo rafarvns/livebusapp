@@ -96,8 +96,8 @@ class _FireMapState extends State<FireMap> {
         ImageConfiguration(size: Size(48, 48)), "assets/busstop.png");
     PointRequest pr = new PointRequest();
     pr.getAllByNumber(90).then((points) {
-      int mId = 0;
       if (points != null) {
+        int mId = 0;
         points.forEach((point) {
           mId++;
           setState(() {
@@ -113,4 +113,5 @@ class _FireMapState extends State<FireMap> {
       }
     });
   }
+
 }
