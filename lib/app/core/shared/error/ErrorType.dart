@@ -1,0 +1,8 @@
+
+
+enum ErrorType {
+
+  API,
+  DATABASE
+
+}

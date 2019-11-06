@@ -1,22 +1,22 @@
 import 'package:livebus/app/core/domain/line/Line.dart';
-import 'package:livebus/app/core/domain/point/PointType.dart';
+import 'package:livebus/app/core/domain/point//PointType.dart';
 
 class Point {
   int _id;
   double _latitude;
   double _longitude;
   String _markerId;
-  PointType _pointType;
+  PointType _userType;
   String _title;
   String _snippets;
   List<Line> _line;
 
   Point(this._id, this._latitude, this._longitude, this._markerId,
-      this._pointType, this._title, this._snippets, this._line);
+      this._userType, this._title, this._snippets, this._line);
 
   factory Point.fromJson(Map<String, dynamic> json) {
     PointType pt;
-    switch (json['pointType'].toString()) {
+    switch (json['userType'].toString()) {
       case "STATION":
         pt = PointType.STATION;
         break;
@@ -31,9 +31,9 @@ class Point {
         break;
     }
     List<Line> lstLine = (json['lines'] as List).map<Line>((line) => new Line.fromJson(line)).toList();
-    Point point = new Point(json['id'], json['latitude'], json['longitude'],
+    Point user = new Point(json['id'], json['latitude'], json['longitude'],
         json['markerId'], pt, json['title'], json['snippets'], lstLine);
-    return point;
+    return user;
   }
 
   List<Line> get line => _line;
@@ -54,10 +54,10 @@ class Point {
     _title = value;
   }
 
-  PointType get pointType => _pointType;
+  PointType get userType => _userType;
 
-  set pointType(PointType value) {
-    _pointType = value;
+  set userType(PointType value) {
+    _userType = value;
   }
 
   String get markerId => _markerId;

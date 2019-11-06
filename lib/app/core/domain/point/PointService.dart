@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'Point.dart';
 import 'PointServiceAbstract.dart';
-import 'package:livebus/app/core/shared/ApiService.dart';
+import 'package:livebus/app/core/shared/api/ApiService.dart';
 
 class PointService extends ApiConnector implements PointServiceAbstract {
 
@@ -17,7 +17,7 @@ class PointService extends ApiConnector implements PointServiceAbstract {
 
 //  @override
 //  Future<List<RouteDraw>> getAllRouteDrawByLine() async {
-//    var parsed = await get("point");
+//    var parsed = await get("user");
 //    return (parsed["data"] as List).map<RouteDraw>((json)=> new RouteDraw.fromJson(json)).toList();
 //  }
 

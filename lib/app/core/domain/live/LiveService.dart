@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:livebus/app/core/domain/live/Live.dart';
 import 'package:livebus/app/core/domain/live/LiveServiceAbstract.dart';
-import 'package:livebus/app/core/shared/ApiService.dart';
+import 'package:livebus/app/core/shared/api/ApiService.dart';
 
 class LiveService extends ApiConnector implements LiveServiceAbstract {
 

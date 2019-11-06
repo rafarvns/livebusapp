@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:livebus/app/core/domain/route_draw/RouteDraw.dart';
-import 'package:livebus/app/core/shared/ApiService.dart';
+import 'package:livebus/app/core/shared/api/ApiService.dart';
 import 'package:livebus/app/views/widgets/home/home_page.dart';
 
 class Home extends StatefulWidget {
