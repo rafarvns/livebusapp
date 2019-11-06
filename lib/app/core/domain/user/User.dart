@@ -1,20 +1,28 @@
+import 'package:jaguar_orm/jaguar_orm.dart';
 import 'package:livebus/app/core/domain/line/Line.dart';
+import 'package:livebus/app/core/domain/line/database/LineDatabaseBean.dart';
 
 class User {
-  int _id;
-  double _latitude;
-  double _longitude;
-  String _markerId;
-  String _title;
-  String _snippets;
-  List<Line> _line;
 
-  User(this._id, this._latitude, this._longitude, this._markerId, this._title,
-    this._snippets, this._line);
+  @PrimaryKey()
+  int id;
+
+  double latitude;
+  double longitude;
+  String markerId;
+  String title;
+  String snippets;
+
+  @HasMany(LineBean)
+  List<Line> lines;
+
+  User();
+  User.make(this.id, this.latitude, this.longitude, this.markerId, this.title,
+    this.snippets, this.lines);
 
   factory User.fromJson(Map<String, dynamic> json) {
     List<Line> lstLine = (json['lines'] as List).map<Line>((line) => new Line.fromJson(line)).toList();
-    User user = new User(
+    User user = new User.make(
       json['id'],
       json['latitude'],
       json['longitude'],
@@ -25,4 +33,8 @@ class User {
     return user;
   }
 
+  String toString() =>
+    'Post({id: $id, latitude: $latitude, longitude: $longitude, markerId: $markerId, title: $title, snippets: $snippets, lstLine: {$lines.toString()}}';
+
 }
+

@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:jaguar_query_sqflite/jaguar_query_sqflite.dart';
 import 'package:livebus/app/core/domain/route_draw/RouteDraw.dart';
 import 'package:livebus/app/core/shared/api/ApiService.dart';
 import 'package:livebus/app/core/shared/container/Repository.dart';
@@ -11,13 +12,12 @@ import 'package:livebus/app/core/values/colors.dart';
 import 'package:livebus/app/views/pages/home/home.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
-//https://pub.dev/documentation/dryice/latest/dryice/dryice-library.html
-Database _database;
-String loca = "";
 
 void main()async{
   Repository repository = Repository();
   repository.initRepository();
+
+  SqfliteAdapter _adapter = SqfliteAdapter(await getDatabasesPath());
 
   FlutterBackgroundLocation.startLocationService();
   FlutterBackgroundLocation.getLocationUpdates((location) {
@@ -36,14 +36,3 @@ void main()async{
 void updatePos(location) {
 //  location.latitude.toString() +", "+ location.longitude.toString()
 }
-
-
-
-
-//
-
-//
-//class DBProvider {
-//  DBProvider._();
-//  static final DBProvider db = DBProvider._();
-//}

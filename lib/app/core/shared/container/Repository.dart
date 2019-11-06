@@ -1,14 +1,16 @@
 import 'dart:io';
 
-import 'package:livebus/app/core/shared/database/Migration.dart';
+import 'package:jaguar_query_sqflite/jaguar_query_sqflite.dart';
+import 'package:livebus/app/core/domain/user/database/UserDatabase.dart';
 import 'package:path/path.dart';
 import 'package:kiwi/kiwi.dart' as kiwi;
 import 'package:livebus/app/core/domain/live/LiveService.dart';
 import 'package:livebus/app/core/domain/point/PointService.dart';
 import 'package:livebus/app/core/domain/route_draw/RouteDrawService.dart';
-import 'package:livebus/app/core/shared/database/SQLiteConnector.dart';
+import 'package:livebus/app/core/shared/database/SQLiteDatabase.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart' as path;
 
 class Repository{
 
@@ -36,8 +38,8 @@ class Repository{
         instance = _repository.resolve<PointService>();
         break;
 
-      case "SQLiteDatabase":
-        instance = _repository.resolve<SQLiteDatabase>();
+      case "UserDatabase":
+        instance = _repository.resolve<UserDatabase>();
         break;
     }
     return instance;
@@ -49,18 +51,11 @@ class Repository{
     _repository.registerInstance(LiveService());
   }
 
-  void _initDatabase() {
-    _repository.registerSingleton((c) async => SQLiteDatabase(await _initDataBase()));
+  Future _initDatabase() async {
+    var dbPath = await getDatabasesPath();
+    _repository.registerSingleton((c) async => SqfliteAdapter(path.join(dbPath, "livebusdb.db")));
+    var adapter = _repository.resolve<SqfliteAdapter>();
+    _repository.registerInstance(UserDatabase(adapter));
   }
-
-  Future<Database> _initDataBase() async {
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    print(documentsDirectory.path);
-    String path =  join(documentsDirectory.path, "livebusdb.db");
-    return await openDatabase(path, version: 1, onOpen: (db) {
-    }, onCreate: (Database db, int version) async {
-      await db.execute(Migration().get());
-    });
-}
 
 }
