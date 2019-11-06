@@ -1,25 +1,23 @@
 
 import 'package:jaguar_query_sqflite/src/adapter.dart';
-import 'package:livebus/app/core/domain/user/User.dart';
-import 'package:livebus/app/core/shared/database/SQLiteDatabase.dart';
-import '../UserDatabaseAbstract.dart';
+import 'UserDatabaseAbstract.dart';
 import 'UserDatabaseBean.dart';
 
-class UserDatabase extends SQLiteDatabase implements UserDatabaseAbstract {
+class UserDatabase implements UserDatabaseAbstract {
 
   UserBean _bean;
+  SqfliteAdapter _adapter;
 
-  UserDatabase(SqfliteAdapter adapter) : super(adapter){
-    _bean = UserBean(adapter);
+  UserDatabase(SqfliteAdapter adapter){
+    _adapter = adapter;
     _initBean();
   }
 
+
   Future _initBean() async {
-    await _bean.drop();
+    await _adapter.connect();
+    _bean = UserBean(_adapter);
+    await _bean.createTable(ifNotExists: true);
   }
-
-
-
-
 
 }

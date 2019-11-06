@@ -7,7 +7,6 @@ import 'package:kiwi/kiwi.dart' as kiwi;
 import 'package:livebus/app/core/domain/live/LiveService.dart';
 import 'package:livebus/app/core/domain/point/PointService.dart';
 import 'package:livebus/app/core/domain/route_draw/RouteDrawService.dart';
-import 'package:livebus/app/core/shared/database/SQLiteDatabase.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
@@ -53,8 +52,7 @@ class Repository{
 
   Future _initDatabase() async {
     var dbPath = await getDatabasesPath();
-    _repository.registerSingleton((c) async => SqfliteAdapter(path.join(dbPath, "livebusdb.db")));
-    var adapter = _repository.resolve<SqfliteAdapter>();
+    var adapter = SqfliteAdapter(path.join(dbPath, "livebusDB.db"));
     _repository.registerInstance(UserDatabase(adapter));
   }
 

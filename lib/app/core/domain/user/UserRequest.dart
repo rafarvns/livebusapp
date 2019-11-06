@@ -1,12 +1,12 @@
 
 
+import 'package:livebus/app/core/domain/user/api/UserServiceAbstract.dart';
 import 'package:livebus/app/core/domain/user/database/UserDatabase.dart';
-import 'package:livebus/app/core/domain/user/UserDatabaseAbstract.dart';
+import 'package:livebus/app/core/domain/user/database/UserDatabaseAbstract.dart';
 import 'package:livebus/app/core/shared/container/Repository.dart';
 
 import 'User.dart';
-import 'UserService.dart';
-import 'UserServiceAbstract.dart';
+import 'api/UserService.dart';
 
 class UserRequest {
 
