@@ -10,20 +10,17 @@ abstract class _LineBean implements Bean<Line> {
   final id = IntField('id');
   final number = IntField('number');
   final name = StrField('name');
-  final userId = IntField('user_id');
   Map<String, Field> _fields;
   Map<String, Field> get fields => _fields ??= {
         id.name: id,
         number.name: number,
         name.name: name,
-        userId.name: userId,
       };
   Line fromMap(Map map) {
     Line model = Line();
     model.id = adapter.parseValue(map['id']);
     model.number = adapter.parseValue(map['number']);
     model.name = adapter.parseValue(map['name']);
-    model.userId = adapter.parseValue(map['user_id']);
 
     return model;
   }
@@ -36,12 +33,10 @@ abstract class _LineBean implements Bean<Line> {
       ret.add(id.set(model.id));
       ret.add(number.set(model.number));
       ret.add(name.set(model.name));
-      ret.add(userId.set(model.userId));
     } else if (only != null) {
       if (only.contains(id.name)) ret.add(id.set(model.id));
       if (only.contains(number.name)) ret.add(number.set(model.number));
       if (only.contains(name.name)) ret.add(name.set(model.name));
-      if (only.contains(userId.name)) ret.add(userId.set(model.userId));
     } else /* if (onlyNonNull) */ {
       if (model.id != null) {
         ret.add(id.set(model.id));
@@ -51,9 +46,6 @@ abstract class _LineBean implements Bean<Line> {
       }
       if (model.name != null) {
         ret.add(name.set(model.name));
-      }
-      if (model.userId != null) {
-        ret.add(userId.set(model.userId));
       }
     }
 
@@ -65,8 +57,6 @@ abstract class _LineBean implements Bean<Line> {
     st.addInt(id.name, primary: true, isNullable: false);
     st.addInt(number.name, isNullable: false);
     st.addStr(name.name, isNullable: false);
-    st.addInt(userId.name,
-        foreignTable: userBean.tableName, foreignCol: 'id', isNullable: false);
     return adapter.createTable(st);
   }
 
@@ -158,32 +148,4 @@ abstract class _LineBean implements Bean<Line> {
     }
     return adapter.remove(remove);
   }
-
-  Future<List<Line>> findByUser(int userId,
-      {bool preload = false, bool cascade = false}) async {
-    final Find find = finder.where(this.userId.eq(userId));
-    return findMany(find);
-  }
-
-  Future<List<Line>> findByUserList(List<User> models,
-      {bool preload = false, bool cascade = false}) async {
-// Return if models is empty. If this is not done, all the records will be returned!
-    if (models == null || models.isEmpty) return [];
-    final Find find = finder;
-    for (User model in models) {
-      find.or(this.userId.eq(model.id));
-    }
-    return findMany(find);
-  }
-
-  Future<int> removeByUser(int userId) async {
-    final Remove rm = remover.where(this.userId.eq(userId));
-    return await adapter.remove(rm);
-  }
-
-  void associateUser(Line child, User parent) {
-    child.userId = parent.id;
-  }
-
-  UserBean get userBean;
 }

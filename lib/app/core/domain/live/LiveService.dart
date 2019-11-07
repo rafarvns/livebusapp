@@ -7,7 +7,7 @@ import 'package:livebus/app/core/shared/api/ApiService.dart';
 
 class LiveService extends ApiConnector implements LiveServiceAbstract {
 
-  LiveService():super("(Live) >> ");
+  LiveService();
 
   @override
   Future<List<Live>> getAllLiveBusesByLine(int numberLine) async {

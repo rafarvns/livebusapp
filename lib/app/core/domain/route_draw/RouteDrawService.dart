@@ -7,7 +7,7 @@ import 'package:livebus/app/core/shared/api/ApiService.dart';
 
 class RouteDrawService extends ApiConnector implements RouteDrawServiceAbstract {
 
-  RouteDrawService():super("(RouteDraw) >> ");
+  RouteDrawService();
 
   @override
   Future<List<RouteDraw>> getAllRouteDrawByLine(int numberLine) async {

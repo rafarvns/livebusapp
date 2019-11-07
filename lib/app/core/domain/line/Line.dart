@@ -9,9 +9,6 @@ class Line {
   int number;
   String name;
 
-  @BelongsTo(UserBean)
-  int userId;
-
   Line.make(this.id, this.number, this.name);
 
   Line();

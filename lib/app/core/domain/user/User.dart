@@ -9,32 +9,31 @@ class User {
 
   double latitude;
   double longitude;
-  String markerId;
-  String title;
-  String snippets;
-
-  @HasMany(LineBean)
-  List<Line> lines;
 
   User();
-  User.make(this.id, this.latitude, this.longitude, this.markerId, this.title,
-    this.snippets, this.lines);
+
+  User.make(this.id, this.latitude, this.longitude);
 
   factory User.fromJson(Map<String, dynamic> json) {
-    List<Line> lstLine = (json['lines'] as List).map<Line>((line) => new Line.fromJson(line)).toList();
     User user = new User.make(
       json['id'],
       json['latitude'],
-      json['longitude'],
-      json['markerId'],
-      json['title'],
-      json['snippets'],
-      lstLine);
+      json['longitude']
+    );
+    return user;
+  }
+
+  factory User.dtoId(Map<String, dynamic> json, double latitude, double longitude) {
+    User user = new User.make(
+      json['data'],
+      latitude,
+      longitude
+    );
     return user;
   }
 
   String toString() =>
-    'Post({id: $id, latitude: $latitude, longitude: $longitude, markerId: $markerId, title: $title, snippets: $snippets, lstLine: {$lines.toString()}}';
+    'Post({id: $id, latitude: $latitude, longitude: $longitude}';
 
 }
 

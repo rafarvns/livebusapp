@@ -7,14 +7,7 @@ part 'UserDatabaseBean.jorm.dart';
 
 @GenBean()
 class UserBean extends Bean<User> with _UserBean {
-  UserBean(Adapter adapter) : lineBean = LineBean(adapter), super(adapter);
-  final LineBean lineBean;
-
-  Future<int> updateReadField(int id, String markerId) async{
-    Update st = updater.where(this.id.eq(id)).set(this.markerId, markerId);
-    return adapter.update(st);
-  }
-
+  UserBean(Adapter adapter) : super(adapter);
   @override
   String get tableName => 'USER';
 }

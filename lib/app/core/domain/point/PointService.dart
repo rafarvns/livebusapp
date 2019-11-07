@@ -7,7 +7,7 @@ import 'package:livebus/app/core/shared/api/ApiService.dart';
 
 class PointService extends ApiConnector implements PointServiceAbstract {
 
-  PointService():super("(Point) >> ");
+  PointService();
 
   @override
   Future<List<Point>> getAllByNumber(int numberLine) async {
