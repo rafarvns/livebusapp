@@ -69,6 +69,7 @@ class _FireMapState extends State<FireMap> {
       if(lock) {
         lock = false;
         updatePos(location);
+        markers.clear();
       }
     });
   }
