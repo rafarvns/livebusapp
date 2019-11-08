@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:livebus/app/core/shared/container/Repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../User.dart';
 import 'package:livebus/app/core/shared/api/ApiService.dart';
@@ -17,10 +18,9 @@ class UserService extends ApiConnector implements UserServiceAbstract {
     var longitude = userInstance.longitude;
     var parsed = await post("user/updateUserPosition/$id/$latitude/$longitude");
     User user = User.dtoId(parsed, latitude, longitude);
-    Repository().updateUserSingleton(user);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('userId', user.id);
     return user;
   }
-
-
 
 }

@@ -23,10 +23,10 @@ class Repository{
     if(this._repository == null) this._repository = kiwi.Container();
   }
 
-  initRepository(){
+  initRepository() {
     _initDomainServices();
     _initDatabase();
-    _initSingletons();
+    _initAppUser();
   }
 
   dynamic getInstance(Type type){
@@ -39,7 +39,7 @@ class Repository{
         instance = _repository.resolve<PointService>();
         break;
       case "LiveService":
-        instance = _repository.resolve<PointService>();
+        instance = _repository.resolve<LiveService>();
         break;
       case "UserService":
         instance = _repository.resolve<UserService>();
@@ -68,14 +68,14 @@ class Repository{
     _repository.registerInstance(UserDatabase(adapter));
   }
 
-  void _initSingletons() {
+  void _initAppUser() {
     var id = Random().nextInt(9999);
-    _repository.registerSingleton((c) => User.make(id, 0, 0));
+    _repository.registerInstance(User.make(id, 0, 0));
   }
 
-  void updateUserSingleton(User user){
+  Future updateRepositoryAppUser(User user) async {
     _repository.unregister<User>();
-    _repository.registerSingleton((c) => User.make(user.id, user.latitude, user.longitude));
+    _repository.registerInstance(User.make(user.id, user.latitude, user.longitude));
   }
 
 }

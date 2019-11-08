@@ -18,9 +18,11 @@ class UserRequest {
       _database = Repository().getInstance(UserDatabase);
     }
 
-    Future updateUserPosition(User userInstance) async {
+    Future<bool> updateUserPosition(User userInstance) async {
       User user = await _service.updateUserPosition(userInstance);
-      _database.updateUser(user);
+      await Repository().updateRepositoryAppUser(user);
+//      await _database.updateUser(user);
+      return true;
     }
 
 }

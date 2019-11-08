@@ -11,7 +11,8 @@ import 'package:livebus/app/core/values/colors.dart';
 
 class ApiConnector {
 //  static const _apiPath = "http://10.0.2.2:8080/api/";
-  static const _apiPath = "http://192.168.1.99:8080/api/";
+//  static const _apiPath = "http://192.168.1.99:8080/api/";
+  static const _apiPath = "https://livebusapi.herokuapp.com/api/";
 
   ApiConnector();
 

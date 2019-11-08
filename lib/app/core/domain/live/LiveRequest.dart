@@ -9,7 +9,7 @@ class LiveRequest {
 
     LiveServiceAbstract _service;
 
-    LiveRequest() { new Repository().getInstance(LiveService); }
+    LiveRequest() { _service = new Repository().getInstance(LiveService); }
 
     Future<List<Live>> getAllLiveBusesByLine(int number){
       return _service.getAllLiveBusesByLine(number);
